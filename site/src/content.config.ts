@@ -14,6 +14,7 @@ const verk = defineCollection({
       ar: z.string().optional(),
       utvald: z.boolean().default(false),
       ordning: z.number().default(999),
+      utvaldOrdning: z.number().optional(),
     }),
 });
 

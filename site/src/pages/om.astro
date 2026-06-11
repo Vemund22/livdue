@@ -1,11 +1,15 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import portratt from '../assets/om/portratt.jpg';
+import cellistArbete from '../assets/om/cellist-arbete.jpg';
 
-// CV-innehållet kommer från gamla sajtens CV (1980–2009) — uppdateras av Liv vid behov
+// CV från Livs uppdaterade "LIV DUE CV" (Pages, juni 2026) + gamla sajtens CV
 const cv: { rubrik: string; poster: string[] }[] = [
   {
     rubrik: 'Utbildning',
     poster: [
+      'Kungliga Konsthögskolan, Stockholm — projektelev, 2012–2013',
       'Kungliga Konsthögskolan, Stockholm — skulptur, 1980–1986',
       'Statens Kunstakademi, Oslo — skulptur, 1978–1980',
       'Bergen Kunsthåndverksskole, Bergen — keramik, 1975–1978',
@@ -29,8 +33,13 @@ const cv: { rubrik: string; poster: string[] }[] = [
   {
     rubrik: 'Separatutställningar (i urval)',
     poster: [
+      'Artspace, Varberg, 2016',
+      'Fullersta Gård, Huddinge, 2010',
+      'Det Gule Huset, Oslo, 2010',
       '"Hake och Due i centrum", Arvika, 2006',
-      'Galleri Aniara, Sollentuna, 2003, 1998 och 1991',
+      'Galleri Aniara, Sollentuna, 2016, 2003, 1998 och 1991',
+      'Ark. Studio 87, Stockholm, 2002',
+      'Konsthallen, Gamla Stan, Stockholm, 2001',
       'Galleri Söderlund, Stockholm, 1995',
       'Galleri Heer, Oslo, 1991 och 1988',
       'Galleri XIII, Stockholm, 1988',
@@ -39,14 +48,11 @@ const cv: { rubrik: string; poster: string[] }[] = [
   {
     rubrik: 'Grupputställningar (i urval)',
     poster: [
-      '"Max A5", Galleri Aniara, Sollentuna, 2006',
-      '"Ad Hoc", Ulriksdals slottspark, Stockholm, 2005',
       '"Aker Brygge Skulptur", Oslo, 2005',
       '"Kulturpark", Djurgården, Stockholm, 2003',
+      '"Skulptur", Aker Brygge, Oslo, 2003',
       'Stockholms 750-årsjubileum, Skeppsholmen, 2002',
       'Grässkulptur, Lidingö centrum och Bergianska trädgården, 1998',
-      '"Marknaden", World Trade Center, Stockholm, 1998',
-      'Görvälns slottspark, Järfälla, 1996',
     ],
   },
   {
@@ -59,6 +65,7 @@ const cv: { rubrik: string; poster: string[] }[] = [
   {
     rubrik: 'Symposier (i urval)',
     poster: [
+      'FluxAura, environmental art, Åbo, 2009',
       'Falu stensymposium, 2005',
       'Stensymposium, Bramming, Danmark, 1999',
       'Iron Pour Symposium, Budapest, 1999',
@@ -91,14 +98,28 @@ const cv: { rubrik: string; poster: string[] }[] = [
 ---
 
 <Layout title="Om">
-  <h1>Om Liv Due</h1>
-  <p class="bio">
-    Liv Due är konstnär, utbildad i skulptur vid Kungliga Konsthögskolan i Stockholm
-    och Statens Kunstakademi i Oslo. Hon arbetar med måleri, foto, skulptur och
-    teckning — i material som spänner från akvarell och akryl till sten, brons,
-    gräs och torv. Hennes offentliga verk finns i Sverige, Norge, Danmark och
-    Finland. Hon bor och arbetar på Lidingö utanför Stockholm.
-  </p>
+  <div class="topp">
+    <Image
+      class="portratt"
+      src={portratt}
+      alt="Liv Due"
+      width={420}
+      widths={[420, 840]}
+      sizes="(max-width: 700px) 92vw, 420px"
+      quality={80}
+      loading="eager"
+    />
+    <div>
+      <h1>Om Liv Due</h1>
+      <p class="bio">
+        Liv Due är konstnär, utbildad i skulptur vid Kungliga Konsthögskolan i
+        Stockholm och Statens Kunstakademi i Oslo. Hon arbetar med måleri,
+        skulptur i sten och brons, teckning, foto och silver. Hennes offentliga
+        verk finns i Sverige, Norge, Danmark och Finland. Hon bor och arbetar på
+        Lidingö utanför Stockholm.
+      </p>
+    </div>
+  </div>
 
   {
     cv.map((sektion) => (
@@ -112,16 +133,42 @@ const cv: { rubrik: string; poster: string[] }[] = [
       </section>
     ))
   }
+
+  <figure class="arbetsbild">
+    <Image
+      src={cellistArbete}
+      alt="Liv Due hugger granitskulpturen Cellist"
+      width={900}
+      widths={[640, 900, 1400]}
+      sizes="(max-width: 1100px) 96vw, 900px"
+      quality={80}
+    />
+    <figcaption class="muted">Liv i arbete med "Cellist", granit, Karlstad.</figcaption>
+  </figure>
 </Layout>
 
 <style>
+  .topp {
+    display: flex;
+    gap: 36px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .topp :global(img.portratt) {
+    flex: 0 0 auto;
+    max-width: min(420px, 100%);
+    height: auto;
+  }
+  .topp > div {
+    flex: 1 1 320px;
+  }
   h1 {
     font-size: 22px;
     margin: 8px 0 12px;
   }
   .bio {
     max-width: 56ch;
-    margin-bottom: 40px;
   }
   section {
     margin-bottom: 28px;
@@ -141,5 +188,12 @@ const cv: { rubrik: string; poster: string[] }[] = [
   section li {
     padding: 3px 0;
     border-top: 1px solid var(--line);
+  }
+  .arbetsbild {
+    margin: 48px 0 0;
+  }
+  .arbetsbild figcaption {
+    margin-top: 8px;
+    font-size: 13px;
   }
 </style>

@@ -4,5 +4,5 @@ kategori: sten
 bild: ../../../assets/verk/sten/genom.jpg
 teknik: "Kalksten + Skifer"
 matt: "180 x 210 x 230 cm"
-ordning: 19
+ordning: 15
 ---

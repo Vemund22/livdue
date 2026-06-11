@@ -4,5 +4,5 @@ kategori: sten
 bild: ../../../assets/verk/sten/kommegjennom.jpg
 teknik: "Granitt + Ek"
 matt: "120 x 140 x 140 cm"
-ordning: 18
+ordning: 19
 ---

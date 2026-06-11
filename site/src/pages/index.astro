@@ -4,12 +4,12 @@ import Layout from '../layouts/Layout.astro';
 import VerkGrid from '../components/VerkGrid.astro';
 
 const utvalda = (await getCollection('verk', (v) => v.data.utvald)).sort(
-  (a, b) => a.data.ordning - b.data.ordning
+  (a, b) => (a.data.utvaldOrdning ?? 999) - (b.data.utvaldOrdning ?? 999)
 );
 ---
 
 <Layout>
-  <p class="intro muted">måleri &middot; foto &middot; skulptur &middot; teckning</p>
+  <p class="intro muted">måleri &middot; sten &middot; teckning &middot; foto &middot; silver</p>
   <VerkGrid verk={utvalda} eager={3} />
   <p class="more"><a href="/verk/">Se alla verk &rarr;</a></p>
 </Layout>

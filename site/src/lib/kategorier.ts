@@ -1,29 +1,22 @@
+// Kategorierna följer Livs egen mappstruktur i NYHEMSIDA
 export const KATEGORI_IDS = [
-  'senaste',
-  'akvarell',
-  'akryl',
-  'teckning',
-  'foto',
-  'brons',
+  'malt',
   'sten',
-  'gras',
-  'objekt',
+  'konst',
+  'teckning-foto',
   'portratt',
-  'rum',
+  'silver',
+  'div',
 ] as const;
 
 export type KategoriId = (typeof KATEGORI_IDS)[number];
 
 export const KATEGORIER: Record<KategoriId, string> = {
-  senaste: 'Senaste',
-  akvarell: 'Akvarell',
-  akryl: 'Akryl & kroki',
-  teckning: 'Teckning',
-  foto: 'Foto',
-  brons: 'Brons',
+  malt: 'Måleri',
   sten: 'Sten',
-  gras: 'Gräs & torv',
-  objekt: 'Objekt',
+  konst: 'Konst',
+  'teckning-foto': 'Teckning & foto',
   portratt: 'Porträtt',
-  rum: 'Rum & scenografi',
+  silver: 'Silver',
+  div: 'Diverse',
 };
