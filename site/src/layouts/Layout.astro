@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { u } from '../lib/url';
 
 interface Props {
   title?: string;
@@ -10,9 +11,9 @@ const { title, description = 'Liv Due — konstnär. Måleri, foto, skulptur och
 const fullTitle = title ? `${title} — Liv Due` : 'Liv Due — konst';
 const path = Astro.url.pathname;
 const nav = [
-  { href: '/verk/', label: 'Verk' },
-  { href: '/om/', label: 'Om' },
-  { href: '/kontakt/', label: 'Kontakt' },
+  { href: u('/verk/'), label: 'Verk' },
+  { href: u('/om/'), label: 'Om' },
+  { href: u('/kontakt/'), label: 'Kontakt' },
 ];
 ---
 
@@ -28,7 +29,7 @@ const nav = [
   <body>
     <header id="sajthuvud">
       <div class="inner">
-        <a class="wordmark" href="/">LIV DUE</a>
+        <a class="wordmark" href={u('/')}>LIV DUE</a>
         <nav>
           {
             nav.map((item) => (

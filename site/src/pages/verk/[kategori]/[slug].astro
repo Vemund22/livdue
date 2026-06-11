@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../../layouts/Layout.astro';
 import { KATEGORIER } from '../../../lib/kategorier';
+import { u } from '../../../lib/url';
 
 export async function getStaticPaths() {
   const alla = await getCollection('verk');
@@ -20,7 +21,7 @@ const mailSubject = encodeURIComponent(`Fråga om verket "${title}"`);
 
 <Layout title={title}>
   <p class="tillbaka">
-    <a href={`/verk/#${kategori}`}>&larr; {KATEGORIER[kategori]}</a>
+    <a href={u(`/verk/#${kategori}`)}>&larr; {KATEGORIER[kategori]}</a>
   </p>
   <figure>
     <Image

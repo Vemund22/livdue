@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { u } from '../lib/url';
 
 interface Props {
   verk: CollectionEntry<'verk'>[];
@@ -14,7 +15,7 @@ const { verk, eager = 0 } = Astro.props;
   {
     verk.map((v, i) => (
       <li>
-        <a href={`/verk/${v.data.kategori}/${v.id.split('/').pop()}/`}>
+        <a href={u(`/verk/${v.data.kategori}/${v.id.split('/').pop()}/`)}>
           <Image
             src={v.data.bild}
             alt={v.data.title}
