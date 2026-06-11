@@ -32,13 +32,27 @@ const { verk, eager = 0 } = Astro.props;
 </ul>
 
 <style>
+  /* CSS-kolumner ger masonry utan JS — stående och liggande format packas tätt */
   .grid {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 28px 22px;
+    columns: 3;
+    column-gap: 22px;
+  }
+  @media (max-width: 900px) {
+    .grid {
+      columns: 2;
+    }
+  }
+  @media (max-width: 560px) {
+    .grid {
+      columns: 1;
+    }
+  }
+  .grid li {
+    break-inside: avoid;
+    margin: 0 0 26px;
   }
   .grid a {
     display: block;
