@@ -26,17 +26,19 @@ const nav = [
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>
-    <header>
-      <a class="wordmark" href="/">LIV DUE</a>
-      <nav>
-        {
-          nav.map((item) => (
-            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
-              {item.label}
-            </a>
-          ))
-        }
-      </nav>
+    <header id="sajthuvud">
+      <div class="inner">
+        <a class="wordmark" href="/">LIV DUE</a>
+        <nav>
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
     </header>
     <main>
       <slot />
@@ -50,6 +52,22 @@ const nav = [
 
 <style>
   header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    transform: translateY(0);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  header.dold {
+    transform: translateY(-100%);
+  }
+  header.svavar {
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .inner {
     max-width: var(--maxw);
     width: 100%;
     margin: 0 auto;
@@ -59,6 +77,17 @@ const nav = [
     align-items: baseline;
     gap: 16px;
     flex-wrap: wrap;
+    transition: padding 0.25s ease;
+  }
+  header.svavar .inner {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    header,
+    .inner {
+      transition: none;
+    }
   }
   .wordmark {
     font-size: 20px;
@@ -101,3 +130,21 @@ const nav = [
     border-color: var(--muted);
   }
 </style>
+
+<script is:inline>
+  // Headern göms vid scroll neråt och glider in igen vid scroll uppåt
+  (() => {
+    const header = document.getElementById('sajthuvud');
+    let senasteY = window.scrollY;
+    const uppdatera = () => {
+      const y = window.scrollY;
+      header.classList.toggle('svavar', y > 10);
+      if (y > 120 && y > senasteY + 4) header.classList.add('dold');
+      else if (y < senasteY - 4 || y <= 120) header.classList.remove('dold');
+      senasteY = y;
+    };
+    window.addEventListener('scroll', uppdatera, { passive: true });
+    // Tabbar man in i headern ska den alltid synas
+    header.addEventListener('focusin', () => header.classList.remove('dold'));
+  })();
+</script>
