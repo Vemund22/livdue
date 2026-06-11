@@ -15,7 +15,7 @@ const perKategori = KATEGORI_IDS.map((id) => ({
 ---
 
 <Layout title="Verk">
-  <nav class="kategorier" aria-label="Kategorier">
+  <nav class="kategorier" slot="subnav" aria-label="Kategorier">
     {perKategori.map((k) => <a href={`#${k.id}`}>{k.label}</a>)}
   </nav>
   {
@@ -30,11 +30,13 @@ const perKategori = KATEGORI_IDS.map((id) => ({
 
 <style>
   .kategorier {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px 16px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px 18px;
     font-size: 14px;
-    margin-bottom: 12px;
   }
   .kategorier a {
     color: var(--muted);
@@ -48,6 +50,7 @@ const perKategori = KATEGORI_IDS.map((id) => ({
   section h2 {
     font-size: 17px;
     margin: 0 0 16px;
-    scroll-margin-top: 24px;
+    /* plats för den synliga sticky-headern vid ankarhopp uppåt */
+    scroll-margin-top: 120px;
   }
 </style>
