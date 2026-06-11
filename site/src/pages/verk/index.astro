@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import VerkGrid from '../../components/VerkGrid.astro';
+import { KATEGORIER, KATEGORI_IDS } from '../../lib/kategorier';
+
+const alla = await getCollection('verk');
+const perKategori = KATEGORI_IDS.map((id) => ({
+  id,
+  label: KATEGORIER[id],
+  verk: alla
+    .filter((v) => v.data.kategori === id)
+    .sort((a, b) => a.data.ordning - b.data.ordning),
+})).filter((k) => k.verk.length > 0);
+---
+
+<Layout title="Verk">
+  <nav class="kategorier" aria-label="Kategorier">
+    {perKategori.map((k) => <a href={`#${k.id}`}>{k.label}</a>)}
+  </nav>
+  {
+    perKategori.map((k) => (
+      <section id={k.id}>
+        <h2>{k.label}</h2>
+        <VerkGrid verk={k.verk} />
+      </section>
+    ))
+  }
+</Layout>
+
+<style>
+  .kategorier {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .kategorier a {
+    color: var(--muted);
+  }
+  .kategorier a:hover {
+    color: var(--text);
+  }
+  section {
+    margin-top: 36px;
+  }
+  section h2 {
+    font-size: 17px;
+    margin: 0 0 16px;
+    scroll-margin-top: 24px;
+  }
+</style>

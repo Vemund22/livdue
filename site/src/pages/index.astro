@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import VerkGrid from '../components/VerkGrid.astro';
+
+const utvalda = (await getCollection('verk', (v) => v.data.utvald)).sort(
+  (a, b) => a.data.ordning - b.data.ordning
+);
+---
+
+<Layout>
+  <p class="intro muted">måleri &middot; foto &middot; skulptur &middot; teckning</p>
+  <VerkGrid verk={utvalda} eager={3} />
+  <p class="more"><a href="/verk/">Se alla verk &rarr;</a></p>
+</Layout>
+
+<style>
+  .intro {
+    font-size: 14px;
+    margin: 0 0 24px;
+  }
+  .more {
+    margin-top: 40px;
+    font-size: 15px;
+  }
+  .more a {
+    color: var(--muted);
+  }
+  .more a:hover {
+    color: var(--text);
+  }
+</style>
