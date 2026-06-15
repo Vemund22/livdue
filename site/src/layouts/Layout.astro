@@ -5,9 +5,14 @@ import { u } from '../lib/url';
 interface Props {
   title?: string;
   description?: string;
+  hideFooter?: boolean;
 }
 
-const { title, description = 'Liv Due — konstnär. Måleri, foto, skulptur och teckning.' } = Astro.props;
+const {
+  title,
+  description = 'Liv Due — konstnär. Måleri, foto, skulptur och teckning.',
+  hideFooter = false,
+} = Astro.props;
 const fullTitle = title ? `${title} — Liv Due` : 'Liv Due — konst';
 const path = Astro.url.pathname;
 const nav = [
@@ -45,10 +50,14 @@ const nav = [
     <main>
       <slot />
     </main>
-    <footer>
-      <span>Intresserad av ett verk? Hör av dig.</span>
-      <a href="mailto:livi@livdue.com">livi@livdue.com</a>
-    </footer>
+    {
+      !hideFooter && (
+        <footer>
+          <span>Intresserad av ett verk? Hör av dig.</span>
+          <a href="mailto:livi@livdue.com">livi@livdue.com</a>
+        </footer>
+      )
+    }
   </body>
 </html>
 

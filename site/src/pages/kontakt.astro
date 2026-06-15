@@ -2,19 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Kontakt">
+<Layout title="Kontakt" hideFooter>
   <h1>Kontakt</h1>
   <p>
     Vill du veta mer om ett verk, fråga om pris eller bara säga hej?
-    Skicka ett mail — jag svarar så fort jag kan.
+    Skicka ett mail, jag svarar så fort jag kan.
   </p>
   <p class="rad">
     <a class="mail" href="mailto:livi@livdue.com">livi@livdue.com</a>
-  </p>
-  <p class="muted adress">
-    Liv Due Art<br />
-    Trolldalsvägen 4a<br />
-    181 29 Lidingö
   </p>
 </Layout>
 
@@ -37,9 +32,5 @@ import Layout from '../layouts/Layout.astro';
   }
   .mail:hover {
     border-color: var(--muted);
-  }
-  .adress {
-    font-size: 14px;
-    line-height: 1.7;
   }
 </style>
