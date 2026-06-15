@@ -39,21 +39,28 @@ const { verk, eager = 0 } = Astro.props;
     margin: 0;
     padding: 0;
     columns: 3;
-    column-gap: 22px;
+    column-gap: 44px;
+  }
+  .grid li {
+    break-inside: avoid;
+    margin: 0 0 48px;
   }
   @media (max-width: 900px) {
     .grid {
       columns: 2;
+      column-gap: 30px;
+    }
+    .grid li {
+      margin-bottom: 34px;
     }
   }
   @media (max-width: 560px) {
     .grid {
       columns: 1;
     }
-  }
-  .grid li {
-    break-inside: avoid;
-    margin: 0 0 26px;
+    .grid li {
+      margin-bottom: 22px;
+    }
   }
   .grid a {
     display: block;
