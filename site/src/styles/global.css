@@ -1,9 +1,11 @@
 :root {
   --bg: #fdfcfa;
   --text: #1c1c1c;
+  --ink: #161514;
   --muted: #8a8782;
   --line: #e8e5e0;
   --maxw: 1100px;
+  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
 }
 
 * {

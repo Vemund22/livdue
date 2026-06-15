@@ -10,15 +10,18 @@ const utvalda = (await getCollection('verk', (v) => v.data.utvald)).sort(
 ---
 
 <Layout>
-  <p class="intro muted">måleri &middot; sten &middot; teckning &middot; foto &middot; silver</p>
+  <p class="intro">måleri, sten, teckning, foto &amp; silver</p>
   <VerkGrid verk={utvalda} eager={3} />
   <p class="more"><a href={u('/verk/')}>Se alla verk &rarr;</a></p>
 </Layout>
 
 <style>
   .intro {
-    font-size: 14px;
-    margin: 0 0 24px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--muted);
+    margin: 0 0 28px;
   }
   .more {
     margin-top: 40px;
