@@ -13,6 +13,7 @@ const {
   description = 'Liv Due — konstnär. Måleri, foto, skulptur och teckning.',
   hideFooter = false,
 } = Astro.props;
+const year = new Date().getFullYear();
 const fullTitle = title ? `${title} — Liv Due` : 'Liv Due — konst';
 const path = Astro.url.pathname;
 const nav = [
@@ -53,7 +54,7 @@ const nav = [
     {
       !hideFooter && (
         <footer>
-          <span>Hör gärna av dig.</span>
+          <span>© {year} Liv Due</span>
           <a href="mailto:livi@livdue.com">livi@livdue.com</a>
         </footer>
       )
