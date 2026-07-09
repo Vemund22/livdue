@@ -16,7 +16,6 @@ export async function getStaticPaths() {
 const { verk } = Astro.props;
 const { title, kategori, teknik, matt, ar, bild } = verk.data;
 const detaljer = [teknik, matt, ar].filter(Boolean).join(' · ');
-const mailSubject = encodeURIComponent(`Fråga om verket "${title}"`);
 ---
 
 <Layout title={title}>
@@ -36,9 +35,6 @@ const mailSubject = encodeURIComponent(`Fråga om verket "${title}"`);
     <figcaption>
       <h1>{title}</h1>
       {detaljer && <p class="muted">{detaljer}</p>}
-      <a class="fraga" href={`mailto:livi@livdue.com?subject=${mailSubject}`}>
-        Intresserad av detta verk? Maila mig
-      </a>
     </figcaption>
   </figure>
 </Layout>
@@ -68,17 +64,7 @@ const mailSubject = encodeURIComponent(`Fråga om verket "${title}"`);
     margin: 18px 0 2px;
   }
   figcaption p {
-    margin: 0 0 14px;
+    margin: 0;
     font-size: 14px;
-  }
-  .fraga {
-    display: inline-block;
-    font-size: 14px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 8px 16px;
-  }
-  .fraga:hover {
-    border-color: var(--muted);
   }
 </style>
