@@ -3,7 +3,7 @@ title: "Hakke"
 kategori: sten
 bild: ../../../assets/verk/sten/hakke.jpg
 teknik: "Diabas"
-ordning: 17
+ordning: 2
 utvald: true
-utvaldOrdning: 5
+utvaldOrdning: 6
 ---

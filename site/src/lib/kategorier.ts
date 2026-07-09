@@ -1,22 +1,24 @@
-// Kategorierna följer Livs egen mappstruktur i NYHEMSIDA
+// Kategorierna följer Livs egen indelning (nytt3)
 export const KATEGORI_IDS = [
   'malt',
+  'teckning',
   'sten',
-  'konst',
-  'teckning-foto',
+  'objekt',
   'portratt',
   'silver',
-  'div',
+  'foto',
+  'digitalt',
 ] as const;
 
 export type KategoriId = (typeof KATEGORI_IDS)[number];
 
 export const KATEGORIER: Record<KategoriId, string> = {
   malt: 'Måleri',
+  teckning: 'Teckning',
   sten: 'Sten',
-  konst: 'Konst',
-  'teckning-foto': 'Teckning & foto',
+  objekt: 'Objekt',
   portratt: 'Porträtt',
   silver: 'Silver',
-  div: 'Diverse',
+  foto: 'Foto',
+  digitalt: 'Digitalt',
 };

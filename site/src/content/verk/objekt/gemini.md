@@ -1,0 +1,8 @@
+---
+title: "Gemini"
+kategori: objekt
+bild: ../../../assets/verk/objekt/gemini.jpg
+teknik: "Gress + Torv"
+matt: "(2x) 140 x 140 x 230 cm"
+ordning: 1
+---
