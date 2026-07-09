@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import VerkGrid from '../../components/VerkGrid.astro';
+import VerkStack from '../../components/VerkStack.astro';
 import { KATEGORIER, KATEGORI_IDS } from '../../lib/kategorier';
 
 const alla = await getCollection('verk');
@@ -19,10 +19,10 @@ const perKategori = KATEGORI_IDS.map((id) => ({
     {perKategori.map((k) => <a href={`#${k.id}`}>{k.label}</a>)}
   </nav>
   {
-    perKategori.map((k) => (
+    perKategori.map((k, i) => (
       <section id={k.id}>
         <h2>{k.label}</h2>
-        <VerkGrid verk={k.verk} />
+        <VerkStack verk={k.verk} eager={i === 0 ? 2 : 0} />
       </section>
     ))
   }
@@ -44,13 +44,22 @@ const perKategori = KATEGORI_IDS.map((id) => ({
   .kategorier a:hover {
     color: var(--text);
   }
+  /* Stort mellanrum mellan kategorier — man ska känna att en ny börjar */
   section {
-    margin-top: 36px;
+    margin-top: 176px;
+  }
+  section:first-of-type {
+    margin-top: 24px;
   }
   section h2 {
-    font-size: 17px;
-    margin: 0 0 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 56px;
     /* plats för den synliga sticky-headern vid ankarhopp uppåt */
-    scroll-margin-top: 120px;
+    scroll-margin-top: 140px;
   }
 </style>
