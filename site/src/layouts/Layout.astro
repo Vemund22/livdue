@@ -69,15 +69,41 @@ const alternates = LOCALES.map((loc) => ({
               ))
             }
           </nav>
-          <nav class="sprak" aria-label="Språk">
-            {
-              langLinks.map((l) => (
-                <a href={l.href} hreflang={l.loc} aria-current={l.active ? 'true' : undefined}>
+          <div class="sprak">
+            <svg
+              class="globe"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M3 12h18"></path>
+              <path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"></path>
+            </svg>
+            <select id="langsel" aria-label="Language">
+              {langLinks.map((l) => (
+                <option value={l.href} selected={l.active}>
                   {l.code}
-                </a>
-              ))
-            }
-          </nav>
+                </option>
+              ))}
+            </select>
+            <svg
+              class="chev"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
         </div>
       </div>
       <slot name="subnav" />
@@ -164,19 +190,44 @@ const alternates = LOCALES.map((loc) => ({
     color: var(--text);
   }
   .sprak {
-    gap: 12px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-  }
-  .sprak a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
     color: var(--muted);
   }
-  .sprak a:hover {
+  .sprak:hover {
     color: var(--text);
   }
-  .sprak a[aria-current='true'] {
-    color: var(--ink);
-    font-weight: 500;
+  .sprak .globe {
+    position: absolute;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    pointer-events: none;
+  }
+  .sprak .chev {
+    position: absolute;
+    right: 0;
+    width: 13px;
+    height: 13px;
+    pointer-events: none;
+  }
+  .sprak select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 4px 18px 4px 22px;
+    cursor: pointer;
+  }
+  .sprak select:focus-visible {
+    outline: 1px solid var(--muted);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
   footer {
     max-width: var(--maxw);
@@ -208,6 +259,12 @@ const alternates = LOCALES.map((loc) => ({
   try {
     localStorage.setItem('livdue-lang', lang);
   } catch (e) {}
+  // Språkval i dropdownen → navigera till samma sida på valt språk
+  var _langsel = document.getElementById('langsel');
+  if (_langsel)
+    _langsel.addEventListener('change', function () {
+      if (this.value) window.location.href = this.value;
+    });
 </script>
 
 <script is:inline>
