@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Liv Due</title><meta name="robots" content="noindex"><link rel="canonical" href="https://livdue.com/en/"><script>(function(){const base = "";
+
+      (function () {
+        try {
+          var valid = ['sv', 'no', 'en'];
+          var saved = localStorage.getItem('livdue-lang');
+          var lang = valid.indexOf(saved) >= 0 ? saved : null;
+          if (!lang) {
+            var d = (navigator.language || 'en').toLowerCase();
+            if (d.indexOf('sv') === 0) lang = 'sv';
+            else if (d.indexOf('nb') === 0 || d.indexOf('nn') === 0 || d.indexOf('no') === 0)
+              lang = 'no';
+            else lang = 'en';
+          }
+          location.replace(base + '/' + lang + '/');
+        } catch (e) {
+          location.replace(base + '/en/');
+        }
+      })();
+    })();</script><meta http-equiv="refresh" content="0; url=/en/"></head> <body> <noscript><a href="/en/">Liv Due →</a></noscript> </body></html>
