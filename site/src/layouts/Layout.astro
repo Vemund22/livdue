@@ -78,6 +78,7 @@ const alternates = LOCALES.map((loc) => ({
       !hideFooter && (
         <footer>
           <span class="copy">© {year} Liv Due</span>
+          <div class="footer-right">
           <div class="sprak">
             <svg
               class="globe"
@@ -114,6 +115,7 @@ const alternates = LOCALES.map((loc) => ({
             </svg>
           </div>
           <a class="mail" href="mailto:livi@livdue.com">livi@livdue.com</a>
+          </div>
         </footer>
       )
     }
@@ -241,14 +243,21 @@ const alternates = LOCALES.map((loc) => ({
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  footer .sprak {
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
     flex: 0 0 auto;
   }
-  footer .mail {
-    flex: 0 1 auto;
+  /* Språkväljare + mail delar färg → uppfattas som klickbara (copyright är dämpad) */
+  footer .sprak {
     color: var(--text);
-    overflow: hidden;
-    text-overflow: ellipsis;
+  }
+  footer .sprak:hover {
+    color: var(--muted);
+  }
+  footer .mail {
+    color: var(--text);
   }
   footer .mail:hover {
     color: var(--muted);
@@ -258,6 +267,9 @@ const alternates = LOCALES.map((loc) => ({
       padding: 16px 16px 28px;
       font-size: 12px;
       gap: 8px;
+    }
+    .footer-right {
+      gap: 12px;
     }
     footer .sprak select {
       font-size: 12px;
