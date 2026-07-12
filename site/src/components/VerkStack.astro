@@ -2,20 +2,22 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { u } from '../lib/url';
+import type { Locale } from '../lib/i18n';
 
 interface Props {
   verk: CollectionEntry<'verk'>[];
+  lang: Locale;
   eager?: number;
 }
 
-const { verk, eager = 0 } = Astro.props;
+const { verk, lang, eager = 0 } = Astro.props;
 ---
 
 <ul class="stack">
   {
     verk.map((v, i) => (
       <li>
-        <a href={u(`/verk/${v.data.kategori}/${v.id.split('/').pop()}/`)}>
+        <a href={u(`/${lang}/verk/${v.data.kategori}/${v.id.split('/').pop()}/`)}>
           <Image
             src={v.data.bild}
             alt={v.data.title}

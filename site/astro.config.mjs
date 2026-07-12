@@ -7,6 +7,12 @@ export default defineConfig({
   site: staging ? 'https://vemund22.github.io' : 'https://livdue.com',
   base: staging ? '/livdue' : undefined,
   trailingSlash: 'ignore',
+  // Gamla enspråkiga URL:er (kort live) → svenska språkvägen
+  redirects: {
+    '/verk': '/sv/verk',
+    '/om': '/sv/om',
+    '/kontakt': '/sv/kontakt',
+  },
   image: {
     // Bilderna är konst — håll hög kvalitet men låt Astro generera responsiva storlekar
     responsiveStyles: true,

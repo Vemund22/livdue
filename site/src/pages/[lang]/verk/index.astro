@@ -1,28 +1,35 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import VerkStack from '../../components/VerkStack.astro';
-import { KATEGORIER, KATEGORI_IDS } from '../../lib/kategorier';
+import Layout from '../../../layouts/Layout.astro';
+import VerkStack from '../../../components/VerkStack.astro';
+import { KATEGORI_IDS } from '../../../lib/kategorier';
+import { LOCALES, UI, catLabel, type Locale } from '../../../lib/i18n';
 
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = UI[lang];
 const alla = await getCollection('verk');
 const perKategori = KATEGORI_IDS.map((id) => ({
   id,
-  label: KATEGORIER[id],
+  label: catLabel(lang, id),
   verk: alla
     .filter((v) => v.data.kategori === id)
     .sort((a, b) => a.data.ordning - b.data.ordning),
 })).filter((k) => k.verk.length > 0);
 ---
 
-<Layout title="Verk">
-  <nav class="kategorier" slot="subnav" aria-label="Kategorier">
+<Layout lang={lang} title={t.nav.verk}>
+  <nav class="kategorier" slot="subnav" aria-label={t.nav.verk}>
     {perKategori.map((k) => <a href={`#${k.id}`}>{k.label}</a>)}
   </nav>
   {
     perKategori.map((k, i) => (
       <section id={k.id}>
         <h2>{k.label}</h2>
-        <VerkStack verk={k.verk} eager={i === 0 ? 2 : 0} />
+        <VerkStack verk={k.verk} lang={lang} eager={i === 0 ? 2 : 0} />
       </section>
     ))
   }
@@ -44,7 +51,6 @@ const perKategori = KATEGORI_IDS.map((id) => ({
   .kategorier a:hover {
     color: var(--text);
   }
-  /* Stort mellanrum mellan kategorier — man ska känna att en ny börjar */
   section {
     margin-top: 176px;
   }
@@ -59,7 +65,6 @@ const perKategori = KATEGORI_IDS.map((id) => ({
     text-transform: uppercase;
     color: var(--muted);
     margin: 0 0 56px;
-    /* plats för den synliga sticky-headern vid ankarhopp uppåt */
     scroll-margin-top: 140px;
   }
 </style>

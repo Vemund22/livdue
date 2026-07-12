@@ -1,50 +1,84 @@
 ---
 import '../styles/global.css';
 import { u } from '../lib/url';
+import { UI, LOCALES, type Locale } from '../lib/i18n';
 
 interface Props {
+  lang: Locale;
   title?: string;
   description?: string;
   hideFooter?: boolean;
 }
 
-const {
-  title,
-  description = 'Liv Due — konstnär. Måleri, foto, skulptur och teckning.',
-  hideFooter = false,
-} = Astro.props;
+const { lang, title, description, hideFooter = false } = Astro.props;
+const t = UI[lang];
 const year = new Date().getFullYear();
-const fullTitle = title ? `${title} — Liv Due` : 'Liv Due — konst';
+const fullTitle = title ? `${title} — Liv Due` : t.siteTitle;
+const desc = description ?? t.metaDesc;
 const path = Astro.url.pathname;
+
 const nav = [
-  { href: u('/verk/'), label: 'Verk' },
-  { href: u('/om/'), label: 'Om' },
-  { href: u('/kontakt/'), label: 'Kontakt' },
+  { href: u(`/${lang}/verk/`), label: t.nav.verk },
+  { href: u(`/${lang}/om/`), label: t.nav.om },
+  { href: u(`/${lang}/kontakt/`), label: t.nav.kontakt },
 ];
+
+// Nuvarande sida utan språkprefix, för språkväxlare + hreflang
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+let rel = path;
+if (base && rel.startsWith(base)) rel = rel.slice(base.length);
+const rest = rel.replace(new RegExp(`^/${lang}(?=/|$)`), '') || '/';
+const langLinks = LOCALES.map((loc) => ({
+  loc,
+  code: loc.toUpperCase(),
+  href: u(`/${loc}${rest === '/' ? '/' : rest}`),
+  active: loc === lang,
+}));
+const alternates = LOCALES.map((loc) => ({
+  loc,
+  href: new URL(u(`/${loc}${rest === '/' ? '/' : rest}`), Astro.site).toString(),
+}));
 ---
 
 <!doctype html>
-<html lang="sv">
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={desc} />
     <meta name="generator" content={Astro.generator} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.loc} href={a.href} />)}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(u(`/en${rest === '/' ? '/' : rest}`), Astro.site).toString()}
+    />
   </head>
   <body>
     <header id="sajthuvud">
       <div class="inner">
-        <a class="wordmark" href={u('/')}>LIV DUE</a>
-        <nav>
-          {
-            nav.map((item) => (
-              <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
-                {item.label}
-              </a>
-            ))
-          }
-        </nav>
+        <a class="wordmark" href={u(`/${lang}/`)}>LIV DUE</a>
+        <div class="hoger">
+          <nav aria-label="Meny">
+            {
+              nav.map((item) => (
+                <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+          <nav class="sprak" aria-label="Språk">
+            {
+              langLinks.map((l) => (
+                <a href={l.href} hreflang={l.loc} aria-current={l.active ? 'true' : undefined}>
+                  {l.code}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
       </div>
       <slot name="subnav" />
     </header>
@@ -87,13 +121,19 @@ const nav = [
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 16px;
+    gap: 16px 28px;
     flex-wrap: wrap;
     transition: padding 0.25s ease;
   }
   header.svavar .inner {
     padding-top: 14px;
     padding-bottom: 14px;
+  }
+  .hoger {
+    display: flex;
+    align-items: baseline;
+    gap: 28px;
+    flex-wrap: wrap;
   }
   @media (prefers-reduced-motion: reduce) {
     header,
@@ -123,6 +163,21 @@ const nav = [
   nav a[aria-current='page'] {
     color: var(--text);
   }
+  .sprak {
+    gap: 12px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .sprak a {
+    color: var(--muted);
+  }
+  .sprak a:hover {
+    color: var(--text);
+  }
+  .sprak a[aria-current='true'] {
+    color: var(--ink);
+    font-weight: 500;
+  }
   footer {
     max-width: var(--maxw);
     width: 100%;
@@ -148,6 +203,13 @@ const nav = [
   }
 </style>
 
+<script is:inline define:vars={{ lang }}>
+  // Kom ihåg valt språk så rot-routern respekterar det nästa gång
+  try {
+    localStorage.setItem('livdue-lang', lang);
+  } catch (e) {}
+</script>
+
 <script is:inline>
   // Headern göms vid scroll neråt och glider in igen vid scroll uppåt
   (() => {
@@ -161,7 +223,6 @@ const nav = [
       senasteY = y;
     };
     window.addEventListener('scroll', uppdatera, { passive: true });
-    // Tabbar man in i headern ska den alltid synas
     header.addEventListener('focusin', () => header.classList.remove('dold'));
   })();
 </script>

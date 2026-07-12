@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import portratt from '../../assets/om/portratt.jpg';
+import cellistArbete from '../../assets/om/cellist-arbete.jpg';
+import { LOCALES, UI, type Locale } from '../../lib/i18n';
+import { OM } from '../../lib/om';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = UI[lang];
+const o = OM[lang];
+---
+
+<Layout lang={lang} title={t.aboutTitle}>
+  <div class="topp">
+    <Image
+      class="portratt"
+      src={portratt}
+      alt={o.portraitAlt}
+      width={420}
+      widths={[420, 840]}
+      sizes="(max-width: 700px) 92vw, 420px"
+      quality={80}
+      loading="eager"
+    />
+    <div>
+      <h1>{t.aboutTitle}</h1>
+      <p class="bio">{o.bio}</p>
+      <p class="film">
+        {o.filmLabel}: <a href="https://vimeo.com/user16090492">vimeo.com/user16090492</a>
+        &middot;
+        <a href="https://vimeo.com/user16304594">vimeo.com/user16304594</a>
+      </p>
+    </div>
+  </div>
+
+  {
+    o.cv.map((sektion) => (
+      <section>
+        <h2>{sektion.rubrik}</h2>
+        <ul>
+          {sektion.poster.map((p) => (
+            <li>{p}</li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <figure class="arbetsbild">
+    <Image
+      src={cellistArbete}
+      alt={o.workAlt}
+      width={900}
+      widths={[640, 900, 1400]}
+      sizes="(max-width: 1100px) 96vw, 900px"
+      quality={80}
+    />
+    <figcaption class="muted">{o.workCaption}</figcaption>
+  </figure>
+</Layout>
+
+<style>
+  .topp {
+    display: flex;
+    gap: 36px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .topp :global(img.portratt) {
+    flex: 0 0 auto;
+    max-width: min(420px, 100%);
+    height: auto;
+  }
+  .topp > div {
+    flex: 1 1 320px;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 8px 0 12px;
+  }
+  .bio {
+    max-width: 56ch;
+    margin-bottom: 16px;
+  }
+  .film {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  .film a {
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+  }
+  .film a:hover {
+    border-color: var(--muted);
+  }
+  section {
+    margin-bottom: 28px;
+    max-width: 64ch;
+  }
+  section h2 {
+    font-size: 15px;
+    margin: 0 0 8px;
+  }
+  section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    color: #555;
+  }
+  section li {
+    padding: 3px 0;
+    border-top: 1px solid var(--line);
+  }
+  .arbetsbild {
+    margin: 48px 0 0;
+  }
+  .arbetsbild figcaption {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+</style>

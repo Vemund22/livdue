@@ -1,13 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
+import { LOCALES, UI, type Locale } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = UI[lang];
 ---
 
-<Layout title="Kontakt">
-  <h1>Kontakt</h1>
-  <p>
-    Vill du veta mer om ett verk, fråga om pris eller bara säga hej?
-    Skicka ett mail, jag svarar så fort jag kan.
-  </p>
+<Layout lang={lang} title={t.contactTitle}>
+  <h1>{t.contactTitle}</h1>
+  <p>{t.contactBody}</p>
   <p class="rad">
     <a class="mail" href="mailto:livi@livdue.com">livi@livdue.com</a>
   </p>

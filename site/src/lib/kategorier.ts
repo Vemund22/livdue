@@ -1,4 +1,4 @@
-// Kategorierna följer Livs egen indelning (nytt3)
+// Kategori-ID:n (URL-slugs). Visningsnamn per språk finns i i18n.ts.
 export const KATEGORI_IDS = [
   'malt',
   'teckning',
@@ -11,14 +11,3 @@ export const KATEGORI_IDS = [
 ] as const;
 
 export type KategoriId = (typeof KATEGORI_IDS)[number];
-
-export const KATEGORIER: Record<KategoriId, string> = {
-  malt: 'Måleri',
-  teckning: 'Teckning',
-  sten: 'Sten',
-  objekt: 'Objekt',
-  portratt: 'Porträtt',
-  silver: 'Silver',
-  foto: 'Foto',
-  digitalt: 'Digitalt',
-};
