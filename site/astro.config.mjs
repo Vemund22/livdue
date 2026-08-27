@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 const staging = process.env.STAGING === '1';
 
 export default defineConfig({
-  site: staging ? 'https://vemund22.github.io' : 'https://livdue.com',
+  site: staging ? 'https://vemunddue.github.io' : 'https://livdue.com',
   base: staging ? '/livdue' : undefined,
   trailingSlash: 'ignore',
   // Gamla enspråkiga URL:er (kort live) → svenska språkvägen
